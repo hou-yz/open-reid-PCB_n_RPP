@@ -24,12 +24,12 @@ from reid.utils.osutils import mkdir_if_missing
 def save_file(lines, args, if_created):
     # write file
     if args.dataset == 'detections':
-        folder_name = osp.expanduser('~/Data/DukeMTMC/L0-features/') + "det_features_{}". \
+        folder_name = osp.expanduser('~/Data/AI_City_Challenge/L0-features/') + "det_features_{}". \
             format(args.l0_name) + '_' + args.det_time
     elif args.dataset == 'gt_test':
         folder_name = osp.abspath(osp.join(working_dir, os.pardir)) + '/DeepCC/experiments/' + args.l0_name
     else:
-        folder_name = osp.expanduser('~/Data/DukeMTMC/L0-features/') + "gt_features_{}".format(args.l0_name)
+        folder_name = osp.expanduser('~/Data/AI_City_Challenge/L0-features/') + "gt_features_{}".format(args.l0_name)
     if args.re:
         folder_name += '_RE'
     if args.crop:
@@ -38,7 +38,7 @@ def save_file(lines, args, if_created):
     mkdir_if_missing(folder_name)
     with open(osp.join(folder_name, 'args.json'), 'w') as fp:
         json.dump(vars(args), fp, indent=1)
-    for cam in range(8):
+    for cam in range(40):
         output_fname = folder_name + '/features%d.h5' % (cam + 1)
         mkdir_if_missing(os.path.dirname(output_fname))
         if args.mygt_icams != 0 and cam + 1 != args.mygt_icams:
@@ -70,15 +70,15 @@ def extract_features(model, data_loader, args, is_detection=True):
 
     # f_names = [[] for _ in range(8)]
     # features = [[] for _ in range(8)]
-    if_created = [0 for _ in range(8)]
-    lines = [[] for _ in range(8)]
+    if_created = [0 for _ in range(40)]
+    lines = [[] for _ in range(40)]
 
     end = time.time()
     for i, (imgs, fnames, _, _) in enumerate(data_loader):
         outputs = extract_cnn_feature(model, imgs, eval_only=True)
         for fname, output in zip(fnames, outputs):
             if is_detection:
-                pattern = re.compile(r'c(\d)_f(\d+)')
+                pattern = re.compile(r'c(\d+)_f(\d+)')
                 cam, frame = map(int, pattern.search(fname).groups())
                 # f_names[cam - 1].append(fname)
                 # features[cam - 1].append(output.numpy())
@@ -102,7 +102,7 @@ def extract_features(model, data_loader, args, is_detection=True):
 
             if_created = save_file(lines, args, if_created)
 
-            lines = [[] for _ in range(8)]
+            lines = [[] for _ in range(40)]
 
     save_file(lines, args, if_created)
     return
@@ -119,26 +119,27 @@ def main(args):
     if args.mygt_icams != 0:
         mygt_icams = [args.mygt_icams]
     else:
-        mygt_icams = list(range(1, 9))
+        mygt_icams = list(range(1, 41))
 
-    data_dir = osp.expanduser('~/Data/DukeMTMC/ALL_det_bbox')
+    data_dir = osp.expanduser('~/Data/AI_City_Challenge/ALL_det_bbox')
     if args.dataset == 'detections':
-        type = 'duke_det'
-        dataset_dir = osp.join(data_dir, ('det_bbox_OpenPose_' + args.det_time))
+        type = 'ai_det'
+        dataset_dir = osp.join(data_dir, ('det_bbox_YOLO3_' + args.det_time))
         fps = None
     elif args.dataset == 'gt_test':
-        type = 'duke_my_gt'
+        type = 'ai_gt'
         # dataset_dir = osp.expanduser('~/Data/DukeMTMC/ALL_gt_bbox/train/gt_bbox_1_fps')  # gt @ 1fps
         # dataset_dir = osp.expanduser('~/houyz/open-reid-PCB_n_RPP/data/dukemtmc/dukemtmc/raw/DukeMTMC-reID/bounding_box_test')  # reid
         dataset_dir = None
         fps = 1
     else:
-        type = 'duke_my_gt'
+        type = 'ai_gt'
         # dataset_dir = osp.expanduser('~/Data/DukeMTMC/ALL_gt_bbox/train/gt_bbox_60_fps')
         dataset_dir = None
-        fps = 60
+        # fps = 60
+        fps = 1
 
-    dataset = DukeMTMC(dataset_dir, type=type, iCams=mygt_icams, fps=fps, trainval=args.det_time == 'trainval')
+    dataset = AI_City(dataset_dir, type=type, iCams=mygt_icams, fps=fps, trainval=args.det_time == 'trainval')
 
     normalizer = T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     if args.crop:  # default: False
@@ -168,7 +169,7 @@ def main(args):
     print('*************** initialization takes time: {:^10.2f} *********************\n'.format(toc))
 
     tic = time.time()
-    extract_features(model, data_loader, args, type == 'duke_det')
+    extract_features(model, data_loader, args, type == 'ai_det')
     toc = time.time() - tic
     print('*************** compute features takes time: {:^10.2f} *********************\n'.format(toc))
     pass
@@ -196,7 +197,7 @@ if __name__ == '__main__':
     parser.add_argument('--logs-dir', type=str, metavar='PATH', default=osp.join(working_dir, 'logs'))
     parser.add_argument('--l0_name', type=str, metavar='PATH')
     parser.add_argument('--det_time', type=str, metavar='PATH', default='trainval_mini',
-                        choices=['trainval', 'trainval_mini', 'trainval_nano', 'val', 'test_all'])
+                        choices=['trainval', 'trainval_mini', 'trainval_nano', 'val', 'test_all', 'train'])
     parser.add_argument('--mygt_icams', type=int, default=0, help="specify if train on single iCam")
     # data jittering
     parser.add_argument('--re', type=float, default=0, help="random erasing")
