@@ -9,7 +9,7 @@ path = '~/Data/AIC19/'
 og_fps = 10
 
 
-def get_bbox(type='gt', det_time='train', fps=2):
+def get_bbox(type='gt', det_time='train', fps=5):
     data_path = osp.join(osp.expanduser(path), 'test' if det_time == 'test' else 'train')
     save_path = osp.join(osp.expanduser('~/Data/AIC19/ALL_{}_bbox/'.format(type)), det_time)
 
@@ -75,12 +75,12 @@ def get_bbox(type='gt', det_time='train', fps=2):
                 bbox_pic = frame_pic[bbox_top:bbox_bottom, bbox_left:bbox_right]
 
                 if type == 'gt':
-                    save_file = osp.join(save_path, "{:04d}_{}_c{:02d}_f{:05d}.jpg".
-                                         format(pid, scene_dir.lower(), iCam, frame))
+                    save_file = osp.join(save_path, "{:04d}_c{:02d}_f{:05d}.jpg".
+                                         format(pid, iCam, frame))
                 else:
                     same_frame_bbox_count = np.where(bboxs[:index, 0] == frame)[0].size
-                    save_file = osp.join(save_path, '{}_c{:02d}_f{:05d}_{:03d}.jpg'.
-                                         format(scene_dir.lower(), iCam, frame, same_frame_bbox_count))
+                    save_file = osp.join(save_path, 'c{:02d}_f{:05d}_{:03d}.jpg'.
+                                         format(iCam, frame, same_frame_bbox_count))
 
                 cv2.imwrite(save_file, bbox_pic)
                 cv2.waitKey(0)
@@ -94,9 +94,9 @@ def get_bbox(type='gt', det_time='train', fps=2):
 
 if __name__ == '__main__':
     print('{}'.format(datetime.datetime.today().strftime('%Y-%m-%d_%H-%M-%S')))
-    # get_bbox()
-    # get_bbox(det_time='val')
+    get_bbox()
+    get_bbox(det_time='val')
     # get_bbox(det_time='trainval')
-    get_bbox(type='det', det_time='val')
+    # get_bbox(type='det', det_time='val')
     print('{}'.format(datetime.datetime.today().strftime('%Y-%m-%d_%H-%M-%S')))
     print('Job Completed!')

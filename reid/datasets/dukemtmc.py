@@ -20,12 +20,12 @@ class DukeMTMC(object):
             self.query_path = osp.join(osp.expanduser(val_dir), ('gt_bbox_{}_fps'.format(fps)))
         elif type == 'tracking_det':
             self.train_path = root
-            self.gallery_path = osp.join(self.train_path, 'bounding_box_test')
-            self.query_path = osp.join(self.train_path, 'query')
+            self.gallery_path = None
+            self.query_path = None
         else:  # reid
             self.train_path = osp.join(root, 'bounding_box_train')
-            self.gallery_path = osp.join(self.train_path, 'bounding_box_test')
-            self.query_path = osp.join(self.train_path, 'query')
+            self.gallery_path = osp.join(root, 'bounding_box_test')
+            self.query_path = osp.join(root, 'query')
         self.camstyle_path = osp.join(self.train_path, 'bounding_box_train_camstyle')
         self.train, self.query, self.gallery, self.camstyle = [], [], [], []
         self.num_train_ids, self.num_query_ids, self.num_gallery_ids, self.num_camstyle_ids = 0, 0, 0, 0
@@ -41,6 +41,8 @@ class DukeMTMC(object):
             pattern = re.compile(r'([-\d]+)_c(\d)')
         all_pids = {}
         ret = []
+        if path is None:
+            return ret, int(len(all_pids))
         if type == 'tracking_gt':
             fpaths = []
             for iCam in self.iCams:
