@@ -4,16 +4,41 @@ import torch
 
 class BaseTrainer(object):
     def __init__(self):
+        """
+        Initialize the data.
+
+        Args:
+            self: (todo): write your description
+        """
         super(BaseTrainer, self).__init__()
 
 
 class CNNTrainer(BaseTrainer):
     def __init__(self, model, criterion, ):
+        """
+        Initialize the model.
+
+        Args:
+            self: (todo): write your description
+            model: (todo): write your description
+            criterion: (todo): write your description
+        """
         super(BaseTrainer, self).__init__()
         self.model = model
         self.criterion = criterion
 
     def train(self, epoch, data_loader, optimizer, log_interval=100, cyclic_scheduler=None, ):
+        """
+        Training function.
+
+        Args:
+            self: (todo): write your description
+            epoch: (int): write your description
+            data_loader: (todo): write your description
+            optimizer: (todo): write your description
+            log_interval: (int): write your description
+            cyclic_scheduler: (todo): write your description
+        """
         self.model.train()
         losses = 0
         correct = 0
@@ -50,6 +75,13 @@ class CNNTrainer(BaseTrainer):
         return losses / len(data_loader), correct / (correct + miss)
 
     def test(self, test_loader):
+        """
+        Evaluates the model
+
+        Args:
+            self: (todo): write your description
+            test_loader: (todo): write your description
+        """
         self.model.eval()
         losses = 0
         correct = 0

@@ -4,6 +4,14 @@ from ..utils import to_torch
 
 
 def accuracy(output, target, topk=(1,)):
+    """
+    Accuracy accuracy.
+
+    Args:
+        output: (todo): write your description
+        target: (todo): write your description
+        topk: (todo): write your description
+    """
     output, target = to_torch(output), to_torch(target)
     maxk = max(topk)
     batch_size = target.size(0)

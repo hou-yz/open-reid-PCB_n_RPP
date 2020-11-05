@@ -22,6 +22,14 @@ world_scale = 6371000 / 180 * np.pi
 
 
 def image2gps(feet_pos, parameters, scene):
+    """
+    Calculate the azimuth of an image.
+
+    Args:
+        feet_pos: (array): write your description
+        parameters: (todo): write your description
+        scene: (todo): write your description
+    """
     feet_pos = feet_pos.reshape(-1, 1, 2)
     if 'intrinsic' in parameters:
         # Have to provide P matrix for appropriate scaling
@@ -33,6 +41,14 @@ def image2gps(feet_pos, parameters, scene):
 
 
 def gps2image(world_pos, parameters, scene):
+    """
+    Concatenate a 2d
+
+    Args:
+        world_pos: (array): write your description
+        parameters: (todo): write your description
+        scene: (todo): write your description
+    """
     world_pos = world_pos[:, ::-1] / world_scale + world_centers[scene]
     world_pos = world_pos.reshape(-1, 1, 2)
     feet_pos = cv2.perspectiveTransform(world_pos, parameters['homography']).reshape(-1, 2)

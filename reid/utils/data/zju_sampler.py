@@ -23,6 +23,15 @@ class ZJU_RandomIdentitySampler(Sampler):
     """
 
     def __init__(self, data_source, batch_size, num_instances):
+        """
+        Parameters ---------- data.
+
+        Args:
+            self: (todo): write your description
+            data_source: (str): write your description
+            batch_size: (int): write your description
+            num_instances: (int): write your description
+        """
         super(ZJU_RandomIdentitySampler, self).__init__(data_source)
         self.data_source = data_source
         self.batch_size = batch_size
@@ -45,6 +54,12 @@ class ZJU_RandomIdentitySampler(Sampler):
         pass
 
     def __iter__(self):
+        """
+        Iterate over all instances of the instances.
+
+        Args:
+            self: (todo): write your description
+        """
         batch_idxs_dict = defaultdict(list)
 
         for pid in self.pids:
@@ -73,4 +88,10 @@ class ZJU_RandomIdentitySampler(Sampler):
         return iter(final_idxs)
 
     def __len__(self):
+        """
+        Returns the length of the queue.
+
+        Args:
+            self: (todo): write your description
+        """
         return self.length

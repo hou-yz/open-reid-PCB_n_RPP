@@ -9,6 +9,14 @@ from ..utils import to_torch
 
 
 def extract_cnn_feature(model, inputs, modules=None):
+    """
+    Extract a feature.
+
+    Args:
+        model: (todo): write your description
+        inputs: (array): write your description
+        modules: (list): write your description
+    """
     model.eval()
     inputs = to_torch(inputs)
     inputs = Variable(inputs, requires_grad=False)
@@ -27,6 +35,14 @@ def extract_cnn_feature(model, inputs, modules=None):
     for m in modules:
         outputs[id(m)] = None
 
+        """
+        Return the function
+
+        Args:
+            m: (int): write your description
+            i: (int): write your description
+            o: (int): write your description
+        """
         def func(m, i, o): outputs[id(m)] = o.data.cpu()
 
         handles.append(m.register_forward_hook(func))

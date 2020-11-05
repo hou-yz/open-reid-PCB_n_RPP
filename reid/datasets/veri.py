@@ -7,6 +7,13 @@ from glob import glob
 
 class VeRi(object):
     def __init__(self, root):
+        """
+        Initialize the gallery.
+
+        Args:
+            self: (todo): write your description
+            root: (str): write your description
+        """
         self.root = osp.join(root, 'VeRi')
         self.train_path = osp.join(root, 'VeRi/image_train/')
         self.gallery_path = osp.join(root, 'VeRi/image_test/')
@@ -19,6 +26,13 @@ class VeRi(object):
         self.load()
 
     def preprocess(self, path):
+        """
+        Preprocess a list of files.
+
+        Args:
+            self: (todo): write your description
+            path: (str): write your description
+        """
         pattern = re.compile(r'(\d+)_c(\d+)')
         all_pids = {}
         ret = []
@@ -34,6 +48,12 @@ class VeRi(object):
         return ret, int(len(all_pids))
 
     def load(self):
+        """
+        Loads the gallery gallery.
+
+        Args:
+            self: (todo): write your description
+        """
         self.train, self.num_train_ids = self.preprocess(self.train_path)
         self.gallery, self.num_gallery_ids = self.preprocess(self.gallery_path)
         self.query, self.num_query_ids = self.preprocess(self.query_path)

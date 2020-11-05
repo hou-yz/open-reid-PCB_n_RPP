@@ -8,6 +8,18 @@ from torchvision.models import resnet50, densenet121
 
 class IDE_model(nn.Module):
     def __init__(self, feature_dim=256, num_classes=0, norm=False, dropout=0, last_stride=2, arch='resnet50'):
+        """
+        Initialize the network.
+
+        Args:
+            self: (todo): write your description
+            feature_dim: (str): write your description
+            num_classes: (int): write your description
+            norm: (todo): write your description
+            dropout: (str): write your description
+            last_stride: (str): write your description
+            arch: (todo): write your description
+        """
         super(IDE_model, self).__init__()
         # Create IDE_only model
         self.feature_dim = feature_dim

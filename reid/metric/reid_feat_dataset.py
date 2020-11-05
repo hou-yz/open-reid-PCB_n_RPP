@@ -9,6 +9,13 @@ from torch.utils.data import Dataset
 
 class HyperFeat(Dataset):
     def __init__(self, root, ):
+        """
+        Initialize the hdf5 file.
+
+        Args:
+            self: (todo): write your description
+            root: (str): write your description
+        """
         self.root = root
         self.data = []
         fpaths = sorted(glob(osp.join(root, '*.h5')))
@@ -43,23 +50,56 @@ class HyperFeat(Dataset):
         pass
 
     def __getitem__(self, index):
+        """
+        Return the features associated with the given an index.
+
+        Args:
+            self: (todo): write your description
+            index: (int): write your description
+        """
         feat = self.features[index, :]
         iCam, pid, frame = map(int, self.labels[index, :])
         return feat, iCam, pid, frame
 
     def __len__(self):
+        """
+        Return the number of the label.
+
+        Args:
+            self: (todo): write your description
+        """
         return self.labels.shape[0]
 
 
 class SiameseHyperFeat(Dataset):
     def __init__(self, h_dataset, ):
+        """
+        Initialize the dataset.
+
+        Args:
+            self: (todo): write your description
+            h_dataset: (todo): write your description
+        """
         self.h_dataset = h_dataset
         self.feature_dim = self.h_dataset.feature_dim
 
     def __len__(self):
+        """
+        Returns the length of the dataset.
+
+        Args:
+            self: (todo): write your description
+        """
         return len(self.h_dataset)
 
     def __getitem__(self, index):
+        """
+        Get the item from the item.
+
+        Args:
+            self: (todo): write your description
+            index: (int): write your description
+        """
         feat1, cam1, pid1, frame1 = self.h_dataset.__getitem__(index)
         target = np.random.randint(0, 2)
         if pid1 == -1:

@@ -8,6 +8,14 @@ from .utils.meters import AverageMeter
 
 
 def extract_features(model, data_loader, print_freq=100):
+    """
+    Extract features.
+
+    Args:
+        model: (todo): write your description
+        data_loader: (todo): write your description
+        print_freq: (str): write your description
+    """
     model.eval()
     batch_time = AverageMeter()
     data_time = AverageMeter()
@@ -39,6 +47,15 @@ def extract_features(model, data_loader, print_freq=100):
 
 
 def pairwise_distance(query_features, gallery_features, query=None, gallery=None):
+    """
+    Compute distance between features.
+
+    Args:
+        query_features: (todo): write your description
+        gallery_features: (bool): write your description
+        query: (str): write your description
+        gallery: (todo): write your description
+    """
     if query is not None and gallery is not None:
         x = torch.cat([query_features[f].unsqueeze(0) for f, _, _ in query], 0)
         y = torch.cat([gallery_features[f].unsqueeze(0) for f, _, _ in gallery], 0)
@@ -58,6 +75,19 @@ def evaluate_all(distmat, query=None, gallery=None,
                  query_ids=None, gallery_ids=None,
                  query_cams=None, gallery_cams=None,
                  cmc_topk=(1, 5, 10)):
+    """
+    Evaluate cams for all scores.
+
+    Args:
+        distmat: (todo): write your description
+        query: (str): write your description
+        gallery: (todo): write your description
+        query_ids: (str): write your description
+        gallery_ids: (int): write your description
+        query_cams: (str): write your description
+        gallery_cams: (todo): write your description
+        cmc_topk: (todo): write your description
+    """
     if query is not None and gallery is not None:
         query_ids = [pid for _, pid, _ in query]
         gallery_ids = [pid for _, pid, _ in gallery]
@@ -95,10 +125,27 @@ def evaluate_all(distmat, query=None, gallery=None,
 
 class Evaluator(object):
     def __init__(self, model):
+        """
+        Initializes the model.
+
+        Args:
+            self: (todo): write your description
+            model: (todo): write your description
+        """
         super(Evaluator, self).__init__()
         self.model = model
 
     def evaluate(self, query_loader, gallery_loader, query, gallery, ):
+        """
+        Evaluate the given query_loader.
+
+        Args:
+            self: (todo): write your description
+            query_loader: (todo): write your description
+            gallery_loader: (todo): write your description
+            query: (str): write your description
+            gallery: (todo): write your description
+        """
         self.model.eval()
         print('extracting query features\n')
         query_features, _ = extract_features(self.model, query_loader)

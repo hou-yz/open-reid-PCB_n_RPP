@@ -8,6 +8,17 @@ from glob import glob
 class DukeMTMC(object):
 
     def __init__(self, root, data_type='reid', iCams=None, fps=1, trainval=False):
+        """
+        Initialize training data.
+
+        Args:
+            self: (todo): write your description
+            root: (str): write your description
+            data_type: (str): write your description
+            iCams: (todo): write your description
+            fps: (todo): write your description
+            trainval: (todo): write your description
+        """
         if iCams is None:
             iCams = list(range(1, 9))
         if data_type == 'tracking_gt':
@@ -43,6 +54,15 @@ class DukeMTMC(object):
         self.load()
 
     def preprocess(self, path, relabel=True, type='reid'):
+        """
+        Preprocesses a list of pids.
+
+        Args:
+            self: (todo): write your description
+            path: (str): write your description
+            relabel: (todo): write your description
+            type: (str): write your description
+        """
         if type == 'tracking_det':
             pattern = re.compile(r'c(\d+)_f(\d+)')
         else:
@@ -78,6 +98,12 @@ class DukeMTMC(object):
         return ret, int(len(all_pids))
 
     def load(self):
+        """
+        Loads training process.
+
+        Args:
+            self: (todo): write your description
+        """
         self.train, self.num_train_ids = self.preprocess(self.train_path, True, self.data_type)
         self.gallery, self.num_gallery_ids = self.preprocess(self.gallery_path, False, self.data_type)
         self.query, self.num_query_ids = self.preprocess(self.query_path, False, self.data_type)

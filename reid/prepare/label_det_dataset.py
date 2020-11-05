@@ -6,6 +6,13 @@ import pandas as pd
 
 
 def bbox_ious(boxA, boxB):
+    """
+    Returns the bounding of a box.
+
+    Args:
+        boxA: (todo): write your description
+        boxB: (todo): write your description
+    """
     if boxA.size == 0 or boxB.size == 0:
         return np.array([])
     boxA[:, 2:4] = np.array([boxA[:, 0] + boxA[:, 2], boxA[:, 1] + boxA[:, 3]]).T
@@ -30,6 +37,13 @@ def bbox_ious(boxA, boxB):
 
 
 def main(det_time='train', IoUthreshold=0.3):
+    """
+    Main function.
+
+    Args:
+        det_time: (int): write your description
+        IoUthreshold: (float): write your description
+    """
     data_dir = os.path.expanduser('~/Data/AIC19/train')
 
     if det_time == 'train':

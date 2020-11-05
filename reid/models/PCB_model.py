@@ -9,6 +9,19 @@ from torchvision.models import resnet50, densenet121
 class PCB_model(nn.Module):
     def __init__(self, num_stripes=6, feature_dim=256, num_classes=0, norm=False, dropout=0, last_stride=1,
                  arch='resnet50'):
+        """
+        Initialize the network.
+
+        Args:
+            self: (todo): write your description
+            num_stripes: (int): write your description
+            feature_dim: (str): write your description
+            num_classes: (int): write your description
+            norm: (todo): write your description
+            dropout: (str): write your description
+            last_stride: (str): write your description
+            arch: (todo): write your description
+        """
         super(PCB_model, self).__init__()
         # Create PCB_only model
         self.num_stripes = num_stripes

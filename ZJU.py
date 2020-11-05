@@ -32,6 +32,11 @@ centerloss          skip
 
 
 def main(args):
+    """
+    Main function
+
+    Args:
+    """
     args.step_size = args.step_size.split(',')
     args.step_size = [int(x) for x in args.step_size]
     # seed
@@ -106,6 +111,12 @@ def main(args):
     if args.train:
         # Schedule learning rate
         def adjust_lr(epoch):
+            """
+            Calculate rate.
+
+            Args:
+                epoch: (int): write your description
+            """
             if epoch <= args.warmup:
                 alpha = epoch / args.warmup
                 warmup_factor = 0.01 * (1 - alpha) + alpha

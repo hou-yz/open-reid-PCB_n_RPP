@@ -8,6 +8,14 @@ from ..serialization import read_json
 
 
 def _pluck(identities, indices, relabel=False):
+    """
+    Return a list of images.
+
+    Args:
+        identities: (list): write your description
+        indices: (array): write your description
+        relabel: (str): write your description
+    """
     ret = []
     for index, pid in enumerate(indices):
         pid_images = identities[pid]
@@ -32,6 +40,14 @@ def _pluck(identities, indices, relabel=False):
 
 class Dataset(object):
     def __init__(self, root, split_id=0):
+        """
+        Initialize training data.
+
+        Args:
+            self: (todo): write your description
+            root: (str): write your description
+            split_id: (str): write your description
+        """
         self.root = root
         self.split_id = split_id
         self.meta = None
@@ -42,9 +58,23 @@ class Dataset(object):
 
     @property
     def images_dir(self):
+        """
+        The absolute path of the images.
+
+        Args:
+            self: (todo): write your description
+        """
         return osp.join(self.root, 'images')
 
     def load(self, num_val=0.3, verbose=True):
+        """
+        Loads a random identities.
+
+        Args:
+            self: (todo): write your description
+            num_val: (int): write your description
+            verbose: (bool): write your description
+        """
         splits = read_json(osp.join(self.root, 'splits.json'))
         if self.split_id >= len(splits):
             raise ValueError("split_id exceeds total splits {}"
@@ -94,6 +124,12 @@ class Dataset(object):
                   .format(len(self.split['gallery']), len(self.gallery)))
 
     def _check_integrity(self):
+        """
+        Checks if the integrity of the root.
+
+        Args:
+            self: (todo): write your description
+        """
         return osp.isdir(osp.join(self.root, 'images')) and \
                osp.isfile(osp.join(self.root, 'meta.json')) and \
                osp.isfile(osp.join(self.root, 'splits.json'))

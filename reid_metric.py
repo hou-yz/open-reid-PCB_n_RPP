@@ -17,6 +17,11 @@ from reid.metric.metric_evaluate import metric_evaluate
 
 
 def main(args):
+    """
+    Main function.
+
+    Args:
+    """
     # dataset path
     if args.logs_dir is None:
         args.logs_dir = osp.join(f'logs/metric/mlp/{args.dataset}')

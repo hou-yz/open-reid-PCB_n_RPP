@@ -10,6 +10,11 @@ __factory = {
 
 
 def names():
+    """
+    Return a list of all the keys.
+
+    Args:
+    """
     return sorted(__factory.keys())
 
 

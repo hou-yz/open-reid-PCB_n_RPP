@@ -9,18 +9,39 @@ from torch.nn import Parameter
 
 
 def read_json(fpath):
+    """
+    Reads a file.
+
+    Args:
+        fpath: (str): write your description
+    """
     with open(fpath, 'r') as f:
         obj = json.load(f)
     return obj
 
 
 def write_json(obj, fpath):
+    """
+    Write the given object to a json file.
+
+    Args:
+        obj: (todo): write your description
+        fpath: (str): write your description
+    """
     os.makedirs(osp.dirname(fpath), exist_ok=True)
     with open(fpath, 'w') as f:
         json.dump(obj, f, indent=4, separators=(',', ': '))
 
 
 def save_checkpoint(state, is_best, fpath='checkpoint.pth.tar'):
+    """
+    Save checkpoint to file.
+
+    Args:
+        state: (todo): write your description
+        is_best: (bool): write your description
+        fpath: (str): write your description
+    """
     os.makedirs(osp.dirname(fpath), exist_ok=True)
     if int(state['epoch']) % 10 == 0:
         torch.save(state, fpath)
@@ -29,6 +50,12 @@ def save_checkpoint(state, is_best, fpath='checkpoint.pth.tar'):
 
 
 def load_checkpoint(fpath):
+    """
+    Load checkpoint from file.
+
+    Args:
+        fpath: (str): write your description
+    """
     if osp.isfile(fpath):
         checkpoint = torch.load(fpath)
         print("=> Loaded checkpoint '{}'".format(fpath))
@@ -38,6 +65,14 @@ def load_checkpoint(fpath):
 
 
 def copy_state_dict(state_dict, model, strip=None):
+    """
+    Copy a dict of model parameters to a dict.
+
+    Args:
+        state_dict: (dict): write your description
+        model: (todo): write your description
+        strip: (str): write your description
+    """
     tgt_state = model.state_dict()
     copied_names = set()
     for name, param in state_dict.items():

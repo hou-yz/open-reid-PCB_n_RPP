@@ -7,6 +7,14 @@ import numpy as np
 
 class MLP_metric(nn.Module):
     def __init__(self, feature_dim=256, num_class=0):
+        """
+        Initialize the network.
+
+        Args:
+            self: (todo): write your description
+            feature_dim: (str): write your description
+            num_class: (int): write your description
+        """
         super(MLP_metric, self).__init__()
         self.num_class = num_class
         layer_dim = 128
@@ -19,6 +27,14 @@ class MLP_metric(nn.Module):
         init.normal_(self.classifier.weight, std=0.001)
 
     def forward(self, feat1, feat2):
+        """
+        Returns the forward forward.
+
+        Args:
+            self: (todo): write your description
+            feat1: (todo): write your description
+            feat2: (todo): write your description
+        """
         out = self.fc1((feat2 - feat1).abs())
         out = self.fc2(out)
         out = self.fc3(out)

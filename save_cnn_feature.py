@@ -19,6 +19,14 @@ from reid.utils.get_loaders import *
 
 
 def save_file(lines, args, root, if_created):
+    """
+    Save the data_file.
+
+    Args:
+        lines: (bool): write your description
+        root: (str): write your description
+        if_created: (bool): write your description
+    """
     # write file
     if args.data_type == 'tracking_det':
         folder_name = root + f"/L0-features/det_{args.det_time}_features_{args.model}_{args.resume}"
@@ -65,6 +73,18 @@ def save_file(lines, args, root, if_created):
 
 
 def extract_n_save(model, data_loader, args, root, num_cams, is_detection=True, use_fname=True, gt_type='reid'):
+    """
+    Extract n - layer model.
+
+    Args:
+        model: (todo): write your description
+        data_loader: (todo): write your description
+        root: (todo): write your description
+        num_cams: (int): write your description
+        is_detection: (bool): write your description
+        use_fname: (str): write your description
+        gt_type: (str): write your description
+    """
     model.eval()
     print_freq = 1000
     batch_time = AverageMeter()
@@ -114,6 +134,11 @@ def extract_n_save(model, data_loader, args, root, num_cams, is_detection=True, 
 
 
 def main(args):
+    """
+    Main function.
+
+    Args:
+    """
     # seed
     if args.seed is not None:
         np.random.seed(args.seed)

@@ -10,6 +10,17 @@ from glob import glob
 class AI_City(object):
 
     def __init__(self, root, data_type='reid', fps=10, trainval=False, gt_type='gt'):
+        """
+        Initialize the index.
+
+        Args:
+            self: (todo): write your description
+            root: (str): write your description
+            data_type: (str): write your description
+            fps: (todo): write your description
+            trainval: (todo): write your description
+            gt_type: (str): write your description
+        """
         if data_type == 'tracking_gt':
             self.root = osp.join(root, 'AIC19')
             if not trainval:
@@ -53,6 +64,15 @@ class AI_City(object):
         self.load()
 
     def preprocess(self, path, relabel=True, type='reid'):
+        """
+        Preprocess a list of files.
+
+        Args:
+            self: (todo): write your description
+            path: (str): write your description
+            relabel: (todo): write your description
+            type: (str): write your description
+        """
         if type == 'tracking_det':
             pattern = re.compile(r'c([-\d]+)_f(\d+)')
         elif type == 'tracking_gt':
@@ -88,6 +108,12 @@ class AI_City(object):
         return ret, int(len(all_pids))
 
     def load(self):
+        """
+        Loads the gallery dataset.
+
+        Args:
+            self: (todo): write your description
+        """
         self.train, self.num_train_ids = self.preprocess(self.train_path, True, self.data_type)
         self.gallery, self.num_gallery_ids = self.preprocess(self.gallery_path, False,
                                                              'reid_test' if self.data_type == 'reid_test' else 'tracking_gt')

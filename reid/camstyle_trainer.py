@@ -14,11 +14,31 @@ from .utils.meters import AverageMeter
 
 class CamStyleTrainer(BaseTrainer):
     def __init__(self, model, criterion, camstyle_loader):
+        """
+        Initialize the network.
+
+        Args:
+            self: (todo): write your description
+            model: (todo): write your description
+            criterion: (todo): write your description
+            camstyle_loader: (todo): write your description
+        """
         super(CamStyleTrainer, self).__init__(model, criterion)
         self.camstyle_loader = camstyle_loader
         self.camstyle_loader_iter = iter(self.camstyle_loader)
 
     def train(self, epoch, data_loader, optimizer, fix_bn=False, print_freq=10):
+        """
+        Training function.
+
+        Args:
+            self: (todo): write your description
+            epoch: (int): write your description
+            data_loader: (todo): write your description
+            optimizer: (todo): write your description
+            fix_bn: (str): write your description
+            print_freq: (float): write your description
+        """
         self.model.train()
 
         if fix_bn:
@@ -73,12 +93,29 @@ class CamStyleTrainer(BaseTrainer):
         return losses.avg, precisions.avg
 
     def _parse_data(self, inputs):
+        """
+        Parse the inputs.
+
+        Args:
+            self: (todo): write your description
+            inputs: (todo): write your description
+        """
         imgs, _, pids, _ = inputs
         inputs = Variable(imgs.cuda())
         targets = Variable(pids.cuda())
         return inputs, targets
 
     def _forward(self, inputs, targets, camstyle_inputs, camstyle_targets):
+        """
+        Forward computation. forward.
+
+        Args:
+            self: (todo): write your description
+            inputs: (todo): write your description
+            targets: (todo): write your description
+            camstyle_inputs: (todo): write your description
+            camstyle_targets: (todo): write your description
+        """
         outputs = self.model(inputs)
         camstyle_outputs = self.model(camstyle_inputs)
         if isinstance(self.criterion, torch.nn.CrossEntropyLoss):
@@ -103,6 +140,14 @@ class CamStyleTrainer(BaseTrainer):
         return loss, prec
 
     def _lsr_loss(self, outputs, targets):
+        """
+        Evaluate the sum.
+
+        Args:
+            self: (todo): write your description
+            outputs: (todo): write your description
+            targets: (list): write your description
+        """
         num_class = outputs.size()[1]
         targets = self._class_to_one_hot(targets.data.cpu(), num_class)
         targets = Variable(targets.cuda())
@@ -113,6 +158,14 @@ class CamStyleTrainer(BaseTrainer):
         return loss
 
     def _class_to_one_hot(self, targets, num_class):
+        """
+        Convert a tensor to one tensor.
+
+        Args:
+            self: (todo): write your description
+            targets: (list): write your description
+            num_class: (int): write your description
+        """
         targets = torch.unsqueeze(targets, 1)
         targets_onehot = torch.FloatTensor(targets.size()[0], num_class)
         targets_onehot.zero_()

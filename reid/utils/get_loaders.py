@@ -12,6 +12,26 @@ from reid.utils.data.preprocessor import Preprocessor
 
 def get_data(name, data_dir, height, width, batch_size, workers,
              combine_trainval, crop, tracking_icams, fps, re=0, num_instances=0, camstyle=0, zju=0, colorjitter=0):
+    """
+    Create training data.
+
+    Args:
+        name: (str): write your description
+        data_dir: (str): write your description
+        height: (bool): write your description
+        width: (int): write your description
+        batch_size: (int): write your description
+        workers: (str): write your description
+        combine_trainval: (bool): write your description
+        crop: (list): write your description
+        tracking_icams: (bool): write your description
+        fps: (bool): write your description
+        re: (str): write your description
+        num_instances: (int): write your description
+        camstyle: (bool): write your description
+        zju: (bool): write your description
+        colorjitter: (array): write your description
+    """
     # if name == 'market1501':
     #     root = osp.join(data_dir, 'Market-1501-v15.09.15')
     # elif name == 'duke_reid':
@@ -83,6 +103,13 @@ def get_data(name, data_dir, height, width, batch_size, workers,
 
 
 def checkpoint_loader(model, path):
+    """
+    Checkpoint checkpoint.
+
+    Args:
+        model: (todo): write your description
+        path: (str): write your description
+    """
     checkpoint = load_checkpoint(path)
     pretrained_dict = checkpoint['state_dict']
     if isinstance(model, nn.DataParallel):

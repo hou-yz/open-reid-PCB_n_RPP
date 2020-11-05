@@ -5,6 +5,18 @@ import matplotlib.pyplot as plt
 
 
 def draw_curve(path, x_epoch, train_loss, train_prec, test_x_epoch=None, test_loss=None, test_prec=None, ):
+    """
+    Draws the loss.
+
+    Args:
+        path: (str): write your description
+        x_epoch: (int): write your description
+        train_loss: (int): write your description
+        train_prec: (int): write your description
+        test_x_epoch: (todo): write your description
+        test_loss: (todo): write your description
+        test_prec: (todo): write your description
+    """
     fig = plt.figure()
     ax0 = fig.add_subplot(121, title="loss")
     ax1 = fig.add_subplot(122, title="prec")

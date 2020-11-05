@@ -23,6 +23,11 @@ from reid.utils.serialization import save_checkpoint
 
 
 def main(args):
+    """
+    Main function.
+
+    Args:
+    """
     # seed
     if args.seed is not None:
         np.random.seed(args.seed)
@@ -84,6 +89,12 @@ def main(args):
     if args.train:
         # Schedule learning rate
         def adjust_lr(epoch):
+            """
+            Adjust the learning rate.
+
+            Args:
+                epoch: (int): write your description
+            """
             if epoch <= args.step_size:
                 lr = args.lr
             else:

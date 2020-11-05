@@ -11,6 +11,15 @@ og_fps = 10
 
 
 def get_bbox(type='gt', det_time='train', fps=10, det_type='ssd'):
+    """
+    Get the bounding box of a given type.
+
+    Args:
+        type: (str): write your description
+        det_time: (str): write your description
+        fps: (todo): write your description
+        det_type: (str): write your description
+    """
     # type = ['gt','det','labeled']
     data_path = osp.join(osp.expanduser(path), 'test' if det_time == 'test' else 'train')
     save_path = osp.join(osp.expanduser('~/Data/AIC19/ALL_{}_bbox/'.format(type)), det_time)

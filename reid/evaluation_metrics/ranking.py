@@ -9,6 +9,13 @@ from ..utils import to_numpy
 
 
 def _unique_sample(ids_dict, num):
+    """
+    Return a random integers from the array.
+
+    Args:
+        ids_dict: (dict): write your description
+        num: (int): write your description
+    """
     mask = np.zeros(num, dtype=np.bool)
     for _, indices in ids_dict.items():
         i = np.random.choice(indices)
@@ -21,6 +28,20 @@ def cmc(distmat, query_ids=None, gallery_ids=None,
         separate_camera_set=False,
         single_gallery_shot=False,
         first_match_break=False):
+    """
+    Compute the cams of the given distances.
+
+    Args:
+        distmat: (todo): write your description
+        query_ids: (str): write your description
+        gallery_ids: (str): write your description
+        query_cams: (str): write your description
+        gallery_cams: (todo): write your description
+        topk: (todo): write your description
+        separate_camera_set: (todo): write your description
+        single_gallery_shot: (bool): write your description
+        first_match_break: (todo): write your description
+    """
     distmat = to_numpy(distmat)
     m, n = distmat.shape
     # Fill up default values
@@ -82,6 +103,16 @@ def cmc(distmat, query_ids=None, gallery_ids=None,
 
 def mean_ap(distmat, query_ids=None, gallery_ids=None,
             query_cams=None, gallery_cams=None):
+    """
+    Compute the mean error of a set.
+
+    Args:
+        distmat: (todo): write your description
+        query_ids: (str): write your description
+        gallery_ids: (str): write your description
+        query_cams: (str): write your description
+        gallery_cams: (todo): write your description
+    """
     distmat = to_numpy(distmat)
     m, n = distmat.shape
     # Fill up default values

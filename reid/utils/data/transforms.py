@@ -18,6 +18,17 @@ class RandomErasing(object):
     """
 
     def __init__(self, probability=0.5, sl=0.02, sh=0.4, r1=0.3, mean=(0.4914, 0.4822, 0.4465)):
+        """
+        Initialize the probability.
+
+        Args:
+            self: (todo): write your description
+            probability: (todo): write your description
+            sl: (int): write your description
+            sh: (float): write your description
+            r1: (int): write your description
+            mean: (float): write your description
+        """
         self.probability = probability
         self.mean = mean
         self.sl = sl
@@ -25,6 +36,13 @@ class RandomErasing(object):
         self.r1 = r1
 
     def __call__(self, img):
+        """
+        Call the image.
+
+        Args:
+            self: (todo): write your description
+            img: (todo): write your description
+        """
 
         if random.uniform(0, 1) >= self.probability:
             return img

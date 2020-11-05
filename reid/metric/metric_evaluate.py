@@ -5,6 +5,14 @@ from reid.evaluators import evaluate_all, pairwise_distance
 
 
 def metric_distance(model, query_features, gallery_features):
+    """
+    Calculate distance between features.
+
+    Args:
+        model: (todo): write your description
+        query_features: (str): write your description
+        gallery_features: (bool): write your description
+    """
     dist = np.zeros([len(query_features), len(gallery_features)])
     step = 1024
     for i in range(len(query_features)):
@@ -18,6 +26,14 @@ def metric_distance(model, query_features, gallery_features):
 
 
 def metric_evaluate(model, query_set, gallery_set):
+    """
+    Evaluate the model.
+
+    Args:
+        model: (str): write your description
+        query_set: (todo): write your description
+        gallery_set: (todo): write your description
+    """
     model.eval()
     print('=> L2 distance')
     dist = pairwise_distance(query_set.features, gallery_set.features)

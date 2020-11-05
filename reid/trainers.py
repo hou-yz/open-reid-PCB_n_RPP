@@ -13,22 +13,65 @@ from .utils.meters import AverageMeter
 
 class BaseTrainer(object):
     def __init__(self, model, criterion):
+        """
+        Initialize the model.
+
+        Args:
+            self: (todo): write your description
+            model: (todo): write your description
+            criterion: (todo): write your description
+        """
         super(BaseTrainer, self).__init__()
         self.model = model
         self.criterion = criterion
 
     def train(self, epoch, data_loader, optimizer):
+        """
+        Parameters ---------- epoch.
+
+        Args:
+            self: (todo): write your description
+            epoch: (int): write your description
+            data_loader: (todo): write your description
+            optimizer: (todo): write your description
+        """
         raise NotImplementedError
 
     def _parse_data(self, inputs):
+        """
+        Parse the input data.
+
+        Args:
+            self: (todo): write your description
+            inputs: (todo): write your description
+        """
         raise NotImplementedError
 
     def _forward(self, inputs, targets):
+        """
+        R perform forward.
+
+        Args:
+            self: (todo): write your description
+            inputs: (todo): write your description
+            targets: (todo): write your description
+        """
         raise NotImplementedError
 
 
 class Trainer(BaseTrainer):
     def train(self, epoch, data_loader, optimizer, fix_bn=False, print_freq=10):
+        """
+        Training function.
+
+        Args:
+            self: (todo): write your description
+            epoch: (int): write your description
+            data_loader: (todo): write your description
+            optimizer: (todo): write your description
+            fix_bn: (str): write your description
+            print_freq: (float): write your description
+        """
         self.model.train()
 
         is_triplet = isinstance(self.criterion, TripletLoss)
@@ -115,12 +158,27 @@ class Trainer(BaseTrainer):
         return losses.avg, precisions.avg
 
     def _parse_data(self, inputs):
+        """
+        Parse the inputs.
+
+        Args:
+            self: (todo): write your description
+            inputs: (todo): write your description
+        """
         imgs, _, pids, _ = inputs
         inputs = [Variable(imgs)]
         targets = Variable(pids.cuda())
         return inputs, targets
 
     def _forward(self, inputs, targets):
+        """
+        Forward computation.
+
+        Args:
+            self: (todo): write your description
+            inputs: (todo): write your description
+            targets: (todo): write your description
+        """
         outputs = self.model(*inputs)
         if isinstance(self.criterion, torch.nn.CrossEntropyLoss) or isinstance(self.criterion, LSR_loss):
             # if isinstance(self.model.module, IDE_model) or isinstance(self.model.module, PCB_model):

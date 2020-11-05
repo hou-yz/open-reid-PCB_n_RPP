@@ -83,6 +83,13 @@ def hard_example_mining(dist_mat, labels, return_inds=False):
 
 class TripletLoss(nn.Module):
     def __init__(self, margin=None):
+        """
+        Initialize the loss.
+
+        Args:
+            self: (todo): write your description
+            margin: (todo): write your description
+        """
         super(TripletLoss, self).__init__()
         self.margin = margin
         if self.margin is not None:
@@ -91,6 +98,15 @@ class TripletLoss(nn.Module):
             self.ranking_loss = nn.SoftMarginLoss()
 
     def forward(self, global_feat, labels, normalize_feature=False):
+        """
+        Forward computation. forward loss.
+
+        Args:
+            self: (todo): write your description
+            global_feat: (todo): write your description
+            labels: (todo): write your description
+            normalize_feature: (bool): write your description
+        """
         if normalize_feature:
             global_feat = normalize(global_feat, axis=-1)
         # shape [N, N]
